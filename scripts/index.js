@@ -26,6 +26,35 @@ const linkInput = newCardForm.querySelector(".popup__input_type_url");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
+// Функция сохранения данных профиля в localStorage
+function saveProfileData() {
+  localStorage.setItem("profile", JSON.stringify({
+    name: profileTitle.textContent,
+    description: profileDescription.textContent,
+  }));
+}
+
+// Функция загрузки данных профиля из localStorage
+function loadProfileData() {
+  const savedProfile = localStorage.getItem("profile");
+  if (savedProfile) {
+    const { name, description } = JSON.parse(savedProfile);
+    profileTitle.textContent = name;
+    profileDescription.textContent = description;
+  }
+}
+
+// Функция сохранения карточек в localStorage
+function saveCards(cards) {
+  localStorage.setItem("cards", JSON.stringify(cards));
+}
+
+// Функция загрузки карточек из localStorage
+function loadCards() {
+  const savedCards = localStorage.getItem("cards");
+  return savedCards ? JSON.parse(savedCards) : [...initialCards];
+}
+
 // Функция открытия попапа
 function openPopup(popup) {
   popup.classList.add("popup_is-opened");
@@ -75,12 +104,13 @@ editForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   profileTitle.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
+  saveProfileData(); // Сохранение данных в localStorage
   closePopup(editPopup);
 });
 
 // Функция создания карточки
 function createCard(data) {
-  const cardElement = cardTemplate.cloneNode(true);
+  const cardElement = cardTemplate.cloneNode(true).querySelector(".card");
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
   const deleteButton = cardElement.querySelector(".card__delete-button");
@@ -93,6 +123,9 @@ function createCard(data) {
   // Обработчик удаления
   deleteButton.addEventListener("click", () => {
     cardElement.remove();
+    let cards = loadCards();
+    cards = cards.filter((card) => card.link !== data.link);
+    saveCards(cards);
   });
 
   // Обработчик лайка
@@ -105,7 +138,9 @@ function createCard(data) {
 
 // Функция рендера карточек
 function renderCards() {
-  initialCards.forEach((cardData) => {
+  placesList.innerHTML = "";
+  const cards = loadCards();
+  cards.forEach((cardData) => {
     const cardElement = createCard(cardData);
     placesList.append(cardElement);
   });
@@ -126,6 +161,11 @@ newCardForm.addEventListener("submit", (evt) => {
     name: placeInput.value,
     link: linkInput.value,
   };
+
+  // Загружаем текущие карточки, добавляем новую и сохраняем
+  const updatedCards = [newCard, ...loadCards()];
+  saveCards(updatedCards);
+
   const cardElement = createCard(newCard);
   placesList.prepend(cardElement);
   closePopup(newCardPopup);
@@ -178,3 +218,4 @@ function enableValidation() {
 }
 
 enableValidation();
+loadProfileData(); // Загрузка данных профиля при загрузке страницы
