@@ -40,3 +40,43 @@
 .popup_is-opened .popup__content {
   transform: scale(1);
 }
+
+.popup__input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.popup__input_type_error {
+  border-color: red;
+}
+
+.popup__error {
+  color: red;
+  font-size: 12px;
+  height: 14px;
+  margin-top: 5px;
+  visibility: hidden;
+}
+
+.popup__error_visible {
+  visibility: visible;
+}
+
+.popup__button {
+  background-color: #000;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.popup__button:disabled {
+  background-color: grey;
+  cursor: default;
+}
