@@ -1,4 +1,7 @@
 import initialCards from "./cards.js";
+// import { someFunction, anotherFunction } from './cards.js';
+// import { initialCards } from './cards.js';
+
 
 // DOM узлы
 const placesList = document.querySelector(".places__list");

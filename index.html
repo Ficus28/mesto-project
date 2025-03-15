@@ -2,19 +2,18 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Mesto</title>
   <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="page">
 <div class="page__content">
-  <header class="header page__section" style="border: 2px solid #ccc; padding: 10px;">
+  <header class="header page__section">
     <img src="./images/logo.svg" alt="Логотип проекта Mesto" class="logo header__logo">
   </header>
   <main class="content">
-    <section class="profile page__section" style="border: 2px solid #ccc; padding: 10px;">
+    <section class="profile page__section">
       <div class="profile__image" style="background-image: url('./images/avatar.jpg');"></div>
       <div class="profile__info">
         <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -23,11 +22,11 @@
       </div>
       <button class="profile__add-button" type="button" aria-label="Добавить место"></button>
     </section>
-    <section class="places page__section" style="border: 2px solid #ccc; padding: 10px;">
+    <section class="places page__section">
       <ul class="places__list"></ul>
     </section>
   </main>
-  <footer class="footer page__section" style="border: 2px solid #ccc; padding: 10px;">
+  <footer class="footer page__section">
     <p class="footer__copyright">© 2021 Mesto Russia</p>
   </footer>
   
@@ -64,11 +63,16 @@
   </div>
 </div>
 
+<!-- <script src="./scripts/index.js" type="module" defer></script>
 <script src="./scripts/cards.js"></script>
-<script src="./scripts/index.js" defer></script>
+<script src="./scripts/index.js" defer></script> -->
+
+<script src="./scripts/cards.js" type="module"></script>
+<script src="./scripts/index.js" type="module" defer></script>
+
 
 <template id="card-template">
-  <li class="places__item card" style="border: 2px solid #ccc; padding: 10px;">
+  <li class="places__item card">
     <img class="card__image" src="" alt="" />
     <button type="button" class="card__delete-button" aria-label="Удалить"></button>
     <div class="card__description">
