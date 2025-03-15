@@ -9,74 +9,144 @@
 @import url('./__image/popup__image.css');
 
 .popup {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5); /* Затемнённый фон */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
+/* Когда попап открыт */
 .popup_is-opened {
   opacity: 1;
   visibility: visible;
 }
 
+/* Контейнер попапа */
 .popup__content {
-  position: relative;
-  background: white;
-  padding: 20px;
+  background: #fff;
+  width: 100%;
+  max-width: 430px;
+  padding: 25px;
   border-radius: 10px;
-  transform: scale(0.5);
+  position: relative;
+  transform: scale(0.8);
   transition: transform 0.3s ease-in-out;
 }
 
+/* Эффект увеличения при открытии */
 .popup_is-opened .popup__content {
   transform: scale(1);
 }
 
-.popup__input {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
+/* Заголовок попапа */
+.popup__title {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
+/* Поля ввода */
+.popup__input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+/* Ошибки валидации */
 .popup__input_type_error {
   border-color: red;
 }
 
-.popup__error {
+.popup__error_visible {
   color: red;
   font-size: 12px;
-  height: 14px;
-  margin-top: 5px;
-  visibility: hidden;
+  margin-top: -8px;
+  margin-bottom: 10px;
+  display: block;
 }
 
-.popup__error_visible {
-  visibility: visible;
-}
-
-.popup__button {
-  background-color: #000;
+/* Кнопка закрытия */
+.popup__close {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
   color: white;
-  padding: 10px;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.popup__close:hover {
+  opacity: 0.7;
+}
+
+/* Кнопка сохранения */
+.popup__button {
+  width: 100%;
+  background: #000;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease-in-out;
 }
 
 .popup__button:disabled {
-  background-color: grey;
+  background: #ccc;
   cursor: default;
+}
+
+.popup__button:hover:not(:disabled) {
+  background: #333;
+}
+
+/* Попап с изображением */
+.popup_type_image .popup__content {
+  max-width: 75%;
+  max-height: 75%;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.popup__image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.popup__caption {
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .popup__content {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .popup__close {
+    top: -30px;
+    right: -30px;
+  }
 }
