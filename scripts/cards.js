@@ -1,7 +1,7 @@
 export default [
   {
     name: "Каракат",
-    link: "https://images.unsplash.com/photo-1543250376-10ae0a9d05a9?crop=entropy&cs=tinysrgb&fit=max&ixid=M3wzMTI4MHwwfDF8c2VhY3JlfDJ8fGNhcmFjdHxlbnwwfDF8fHwyfDE2ODk5MjM0MzA&ixlib=rb-1.2.1&q=80&w=1080",
+    link: "https://zakon.ru/Content/entriesattachments/304aa15a-78d3-4284-af64-01b39c223eb0.jpg",
     liked: false
   },
   {

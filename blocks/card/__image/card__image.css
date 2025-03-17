@@ -2,8 +2,13 @@
   height: 282px;
   object-fit: cover;
   width: 100%;
+  overflow: hidden;
 }
 
 .card__image:hover {
   cursor: pointer;
 }
+/* .card__image img{
+  z-index: 99;
+  overflow: hidden;
+} */

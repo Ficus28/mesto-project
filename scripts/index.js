@@ -1,4 +1,4 @@
-import initialCards from "./scripts/cards.js";
+import initialCards from "./cards.js";
 
 // DOM узлы
 const placesList = document.querySelector(".places__list");
@@ -21,6 +21,7 @@ const jobInput = editPopup?.querySelector(".popup__input_type_description");
 const newCardForm = newCardPopup?.querySelector(".popup__form");
 const placeInput = newCardForm?.querySelector(".popup__input_type_card-name");
 const linkInput = newCardForm?.querySelector(".popup__input_type_url");
+const submitButton = newCardForm?.querySelector(".popup__button");
 
 // Данные профиля
 const profileTitle = document.querySelector(".profile__title");
@@ -171,6 +172,7 @@ renderCards();
 if (addButton && newCardForm) {
   addButton.addEventListener("click", () => {
     newCardForm.reset();
+    checkInputValidity(newCardForm);
     openPopup(newCardPopup);
   });
 
@@ -196,6 +198,26 @@ if (addButton && newCardForm) {
     placesList.prepend(cardElement);
     closePopup(newCardPopup);
   });
+}
+
+// Функция валидации формы
+function enableValidation() {
+  document.querySelectorAll(".popup__form").forEach((form) => {
+    form.addEventListener("input", () => checkInputValidity(form));
+  });
+}
+
+// Проверка валидности формы и управление кнопкой
+function checkInputValidity(form) {
+  const inputs = Array.from(form.querySelectorAll(".popup__input"));
+  const submitButton = form.querySelector(".popup__button");
+
+  const isValid = inputs.every((input) => input.value.trim() !== "");
+
+  if (submitButton) {
+    submitButton.disabled = !isValid;
+    submitButton.classList.toggle("popup__button_disabled", !isValid);
+  }
 }
 
 // Включаем валидацию
