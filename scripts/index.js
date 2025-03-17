@@ -1,11 +1,8 @@
-import initialCards from "./cards.js";
-// import { someFunction, anotherFunction } from './cards.js';
-// import { initialCards } from './cards.js';
-
+import initialCards from "./scripts/cards.js";
 
 // DOM узлы
 const placesList = document.querySelector(".places__list");
-const cardTemplate = document.querySelector("#card-template").content;
+const cardTemplate = document.querySelector("#card-template")?.content;
 
 // Попапы
 const editPopup = document.querySelector(".popup_type_edit");
@@ -17,23 +14,28 @@ const addButton = document.querySelector(".profile__add-button");
 const closeButtons = document.querySelectorAll(".popup__close");
 
 // Формы
-const editForm = editPopup.querySelector(".popup__form");
-const nameInput = editPopup.querySelector(".popup__input_type_name");
-const jobInput = editPopup.querySelector(".popup__input_type_description");
+const editForm = editPopup?.querySelector(".popup__form");
+const nameInput = editPopup?.querySelector(".popup__input_type_name");
+const jobInput = editPopup?.querySelector(".popup__input_type_description");
 
-const newCardForm = newCardPopup.querySelector(".popup__form");
-const placeInput = newCardForm.querySelector(".popup__input_type_card-name");
-const linkInput = newCardForm.querySelector(".popup__input_type_url");
+const newCardForm = newCardPopup?.querySelector(".popup__form");
+const placeInput = newCardForm?.querySelector(".popup__input_type_card-name");
+const linkInput = newCardForm?.querySelector(".popup__input_type_url");
 
 // Данные профиля
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
+// Проверка наличия обязательных элементов
+if (!placesList || !cardTemplate || !editPopup || !newCardPopup) {
+  console.error("Ошибка: не найдены основные DOM-узлы.");
+}
+
 // Функция сохранения данных профиля в localStorage
 function saveProfileData() {
   localStorage.setItem("profile", JSON.stringify({
-    name: profileTitle.textContent,
-    description: profileDescription.textContent,
+    name: profileTitle?.textContent,
+    description: profileDescription?.textContent,
   }));
 }
 
@@ -42,8 +44,8 @@ function loadProfileData() {
   const savedProfile = localStorage.getItem("profile");
   if (savedProfile) {
     const { name, description } = JSON.parse(savedProfile);
-    profileTitle.textContent = name;
-    profileDescription.textContent = description;
+    if (profileTitle) profileTitle.textContent = name;
+    if (profileDescription) profileDescription.textContent = description;
   }
 }
 
@@ -81,8 +83,7 @@ function closePopupOnEsc(evt) {
 }
 
 // Закрытие попапа по клику на оверлей
-const popups = document.querySelectorAll(".popup");
-popups.forEach((popup) => {
+document.querySelectorAll(".popup").forEach((popup) => {
   popup.addEventListener("click", (evt) => {
     if (evt.target.classList.contains("popup")) {
       closePopup(popup);
@@ -97,19 +98,21 @@ closeButtons.forEach((button) => {
 });
 
 // Обработчик редактирования профиля
-editButton.addEventListener("click", () => {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileDescription.textContent;
-  openPopup(editPopup);
-});
+if (editButton && editForm) {
+  editButton.addEventListener("click", () => {
+    if (nameInput && profileTitle) nameInput.value = profileTitle.textContent;
+    if (jobInput && profileDescription) jobInput.value = profileDescription.textContent;
+    openPopup(editPopup);
+  });
 
-editForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  profileTitle.textContent = nameInput.value;
-  profileDescription.textContent = jobInput.value;
-  saveProfileData(); // Сохранение данных в localStorage
-  closePopup(editPopup);
-});
+  editForm.addEventListener("submit", (evt) => {
+    evt.preventDefault();
+    if (profileTitle && nameInput) profileTitle.textContent = nameInput.value;
+    if (profileDescription && jobInput) profileDescription.textContent = jobInput.value;
+    saveProfileData();
+    closePopup(editPopup);
+  });
+}
 
 // Функция создания карточки
 function createCard(data) {
@@ -123,17 +126,30 @@ function createCard(data) {
   cardImage.src = data.link;
   cardImage.alt = data.name;
 
-  // Обработчик удаления
+  // Восстановление состояния лайка
+  if (data.liked) {
+    likeButton.classList.add("card__like-button_active");
+  }
+
+  // Обработчик удаления карточки с подтверждением
   deleteButton.addEventListener("click", () => {
-    cardElement.remove();
-    let cards = loadCards();
-    cards = cards.filter((card) => card.link !== data.link);
-    saveCards(cards);
+    if (window.confirm("Вы уверены, что хотите удалить эту карточку?")) {
+      cardElement.remove();
+      let cards = loadCards();
+      cards = cards.filter((card) => card.link !== data.link);
+      saveCards(cards);
+    }
   });
 
   // Обработчик лайка
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__like-button_active");
+    let cards = loadCards();
+    const cardIndex = cards.findIndex(card => card.link === data.link);
+    if (cardIndex !== -1) {
+      cards[cardIndex].liked = likeButton.classList.contains("card__like-button_active");
+      saveCards(cards);
+    }
   });
 
   return cardElement;
@@ -152,73 +168,36 @@ function renderCards() {
 renderCards();
 
 // Открытие попапа добавления карточки
-addButton.addEventListener("click", () => {
-  newCardForm.reset();
-  openPopup(newCardPopup);
-});
-
-// Обработчик добавления новой карточки
-newCardForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  const newCard = {
-    name: placeInput.value,
-    link: linkInput.value,
-  };
-
-  // Загружаем текущие карточки, добавляем новую и сохраняем
-  const updatedCards = [newCard, ...loadCards()];
-  saveCards(updatedCards);
-
-  const cardElement = createCard(newCard);
-  placesList.prepend(cardElement);
-  closePopup(newCardPopup);
-});
-
-// Функции валидации
-function showInputError(form, input, errorMessage) {
-  const errorElement = form.querySelector(`#${input.name}-error`);
-  input.classList.add("popup__input_type_error");
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add("popup__error_visible");
-}
-
-function hideInputError(form, input) {
-  const errorElement = form.querySelector(`#${input.name}-error`);
-  input.classList.remove("popup__input_type_error");
-  errorElement.textContent = "";
-  errorElement.classList.remove("popup__error_visible");
-}
-
-function checkInputValidity(form, input) {
-  if (!input.validity.valid) {
-    showInputError(form, input, input.validationMessage);
-  } else {
-    hideInputError(form, input);
-  }
-}
-
-function toggleButtonState(inputs, button) {
-  button.disabled = inputs.some((input) => !input.validity.valid);
-}
-
-function setEventListeners(form) {
-  const inputs = Array.from(form.querySelectorAll(".popup__input"));
-  const button = form.querySelector(".popup__button");
-
-  inputs.forEach((input) => {
-    input.addEventListener("input", () => {
-      checkInputValidity(form, input);
-      toggleButtonState(inputs, button);
-    });
+if (addButton && newCardForm) {
+  addButton.addEventListener("click", () => {
+    newCardForm.reset();
+    openPopup(newCardPopup);
   });
 
-  toggleButtonState(inputs, button);
+  // Обработчик добавления новой карточки
+  newCardForm.addEventListener("submit", (evt) => {
+    evt.preventDefault();
+    const newCard = {
+      name: placeInput.value,
+      link: linkInput.value,
+      liked: false,
+    };
+
+    // Проверка на пустые значения
+    if (!newCard.name || !newCard.link) {
+      return;
+    }
+
+    // Загружаем текущие карточки, добавляем новую и сохраняем
+    const updatedCards = [newCard, ...loadCards()];
+    saveCards(updatedCards);
+
+    const cardElement = createCard(newCard);
+    placesList.prepend(cardElement);
+    closePopup(newCardPopup);
+  });
 }
 
-function enableValidation() {
-  const forms = document.querySelectorAll(".popup__form");
-  forms.forEach(setEventListeners);
-}
-
+// Включаем валидацию
 enableValidation();
-loadProfileData(); // Загрузка данных профиля при загрузке страницы
+loadProfileData();

@@ -1,28 +1,12 @@
-const initialCards = [
+export default [
   {
-    name: "Архыз",
-    link: "https://avatars.mds.yandex.net/get-ydo/3912055/2a0000018fafbdb99acbe0a7f5bf667a1e69/diploma",
+    name: "Каракат",
+    link: "https://images.unsplash.com/photo-1543250376-10ae0a9d05a9?crop=entropy&cs=tinysrgb&fit=max&ixid=M3wzMTI4MHwwfDF8c2VhY3JlfDJ8fGNhcmFjdHxlbnwwfDF8fHwyfDE2ODk5MjM0MzA&ixlib=rb-1.2.1&q=80&w=1080",
+    liked: false
   },
   {
-    name: "Челябинская область",
-    link: "https://avatars.mds.yandex.net/i?id=8bc78a51eb3ee88607e761fd8b414a99_l-5252229-images-thumbs&n=13",
-  },
-  {
-    name: "Иваново",
-    link: "https://happylove.top/uploads/posts/2023-09/1694171941_happylove-top-p-krasivie-foto-goroda-ivanovo-instagram-49.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://gkecopoldnr.ru/wp-content/uploads/2024/09/medved-e1725620738523.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://avatars.mds.yandex.net/i?id=496c793e2fd915139278ab174f3ae38b_l-5232340-images-thumbs&n=13",
-  },
-  {
-    name: "Байкал",
-    link: "https://xn--80aagchebveo1advbvqjs.xn--p1ai/images/content_hotel_56fd1e39742fe8.00271358.jpg",
+    name: "Гора Эльбрус",
+    link: "https://images.unsplash.com/photo-1516711167383-df29c44c33bc?crop=entropy&cs=tinysrgb&fit=max&ixid=M3wzMTI4MHwwfDF8c2VhY3JlfDJ8fGhlbGlfZGlzdGVuY2V8ZW58MHx8fHx8fHw%3D&ixid=M3wzMTI4MHwwfDF8c2VhY3JlfDJ8fGhlbGlfZGlzdGVuY2V8ZW58MHx8fHx8fHw%3D&ixlib=rb-1.2.1&q=80&w=1080",
+    liked: false
   }
 ];
-
-export default initialCards;
