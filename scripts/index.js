@@ -117,22 +117,28 @@ if (editButton && editForm) {
 
 // Функция создания карточки
 function createCard(data) {
+  // Клонируем шаблон карточки
   const cardElement = cardTemplate.cloneNode(true).querySelector(".card");
+  
+  // Получаем ссылки на элементы
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
   const deleteButton = cardElement.querySelector(".card__delete-button");
   const likeButton = cardElement.querySelector(".card__like-button");
+  const likeCount = cardElement.querySelector(".card__like-count");
 
+  // Заполняем карточку данными
   cardTitle.textContent = data.name;
   cardImage.src = data.link;
   cardImage.alt = data.name;
 
-  // Восстановление состояния лайка
+  // Восстановление состояния лайка и счётчика
   if (data.liked) {
-    likeButton.classList.add("card__like-button_active");
+    likeButton.classList.add("card__like-button_is-active");
   }
+  likeCount.textContent = data.likes || 0;
 
-  // Обработчик удаления карточки с подтверждением
+  // Обработчик удаления карточки
   deleteButton.addEventListener("click", () => {
     if (window.confirm("Вы уверены, что хотите удалить эту карточку?")) {
       cardElement.remove();
@@ -142,13 +148,27 @@ function createCard(data) {
     }
   });
 
-  // Обработчик лайка
+  // Обработчик лайка с изменением счётчика
   likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_active");
+    const isLiked = likeButton.classList.toggle("card__like-button_is-active");
+    let newLikes = data.likes || 0;
+    
+    if (isLiked) {
+      newLikes++;
+    } else {
+      newLikes--;
+    }
+
+    likeCount.textContent = newLikes;
+    data.likes = newLikes; // Обновляем количество лайков в данных карточки
+
+    // Обновляем состояние лайка в localStorage
     let cards = loadCards();
-    const cardIndex = cards.findIndex(card => card.link === data.link);
+    const cardIndex = cards.findIndex((card) => card.link === data.link);
+    
     if (cardIndex !== -1) {
-      cards[cardIndex].liked = likeButton.classList.contains("card__like-button_active");
+      cards[cardIndex].likes = newLikes;
+      cards[cardIndex].liked = isLiked;
       saveCards(cards);
     }
   });
@@ -156,17 +176,19 @@ function createCard(data) {
   return cardElement;
 }
 
+
 // Функция рендера карточек
 function renderCards() {
-  placesList.innerHTML = "";
-  const cards = loadCards();
+  placesList.innerHTML = ""; // Очистить список карточек
+  const cards = loadCards(); // Загружаем карточки из localStorage
   cards.forEach((cardData) => {
-    const cardElement = createCard(cardData);
-    placesList.append(cardElement);
+    const cardElement = createCard(cardData); // Создаём карточку
+    placesList.append(cardElement); // Добавляем карточку в DOM
   });
 }
 
-renderCards();
+renderCards(); // Вызов функции для начальной отрисовки
+
 
 // Открытие попапа добавления карточки
 if (addButton && newCardForm) {
@@ -177,27 +199,29 @@ if (addButton && newCardForm) {
   });
 
   // Обработчик добавления новой карточки
-  newCardForm.addEventListener("submit", (evt) => {
-    evt.preventDefault();
-    const newCard = {
-      name: placeInput.value,
-      link: linkInput.value,
-      liked: false,
-    };
+newCardForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  const newCard = {
+    name: placeInput.value,
+    link: linkInput.value,
+    liked: false,
+    likes: 0 // Начальное количество лайков
+  };
 
-    // Проверка на пустые значения
-    if (!newCard.name || !newCard.link) {
-      return;
-    }
+  // Проверка на пустые значения
+  if (!newCard.name || !newCard.link) {
+    return;
+  }
 
-    // Загружаем текущие карточки, добавляем новую и сохраняем
-    const updatedCards = [newCard, ...loadCards()];
-    saveCards(updatedCards);
+  // Загружаем текущие карточки, добавляем новую и сохраняем
+  const updatedCards = [newCard, ...loadCards()];
+  saveCards(updatedCards);
 
-    const cardElement = createCard(newCard);
-    placesList.prepend(cardElement);
-    closePopup(newCardPopup);
-  });
+  const cardElement = createCard(newCard); // Создаём карточку
+  placesList.prepend(cardElement); // Добавляем её в начало списка
+  closePopup(newCardPopup); // Закрываем попап
+});
+
 }
 
 // Функция валидации формы

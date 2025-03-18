@@ -66,15 +66,20 @@
 
   <!-- Шаблон карточки -->
   <template id="card-template">
-    <li class="card">
-      <div class="card__image"><img src="https://images.unsplash.com/photo-1679978677453-9452668cb867?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt=""></div>
-      <div class="card__description">
+    <div class="card">
+      <img class="card__image" alt="Фото" />
+      <div class="card__info">
         <h2 class="card__title"></h2>
-        <button class="card__like-button" type="button" aria-label="Нравится"></button>
-        <button class="card__delete-button" type="button" aria-label="Удалить"></button>
+        <div class="card__actions">
+          <button class="card__like-button"></button>
+          <span class="card__like-count">0</span>
+          <button class="card__delete-button"></button>
+        </div>
       </div>
-    </li>
+    </div>
   </template>
+  
+  
 
   <!-- <script src="./scripts/index.js"></script> -->
   <script src="./scripts/index.js" type="module"></script>
