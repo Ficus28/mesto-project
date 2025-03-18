@@ -49,6 +49,38 @@
     font-size: 14px;
   }
   
+  /* Модальное окно */
+.modal {
+    display: none; /* Изначально скрыто */
+    position: fixed;
+    z-index: 1; /* На переднем плане */
+    padding-top: 100px; /* Отступ сверху */
+    left: 0;
+    top: 0;
+    width: 100%; /* Полный экран */
+    height: 100%;
+    overflow: auto; /* При необходимости прокручивается */
+    background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный фон */
+  }
+  
+  /* Модальное изображение */
+  .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%; /* Меньше, чем 100%, чтобы не выходило за края */
+    max-width: 700px; /* Максимальная ширина */
+  }
+  
+  /* Кнопка закрытия */
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+  }
   
   
   

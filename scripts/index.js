@@ -153,7 +153,34 @@ function createCard(data) {
     }
   });
 
+  // Добавляем обработчик для открытия изображения в модальном окне
+  cardImage.addEventListener("click", function() {
+    openImageModal(this.src); // Открываем изображение в модальном окне
+  });
+
   return cardElement;
+}
+
+// Функция открытия модального окна с изображением
+function openImageModal(imageSrc) {
+  const modal = document.getElementById("imageModal");
+  const fullImage = document.getElementById("fullImage");
+  const closeModal = document.getElementById("closeModal");
+
+  fullImage.src = imageSrc;
+  modal.style.display = "block"; // Показываем модальное окно
+
+  // Закрытие модального окна
+  closeModal.addEventListener("click", () => {
+    modal.style.display = "none"; // Прячем модальное окно
+  });
+
+  // Закрытие модального окна при клике на фон
+  window.addEventListener("click", function(event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
 }
 
 // Рендер карточек
