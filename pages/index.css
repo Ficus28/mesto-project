@@ -11,3 +11,45 @@
 @import url('../blocks/popup/_is-animated/popup_is-animated.css');
 @import url('../blocks/popup/_is-opened/popup_is-opened.css');
 
+.card__footer {
+    background-color: rgba(255, 255, 255, 0.8); /* Светлый фон, контрастный */
+    color: #222; /* Чёткий тёмный цвет текста */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  
+  .card__title {
+    color: #222; /* Глубокий тёмный цвет */
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .card__likes {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .card__like-button {
+    background: url('/images/like-inactive.svg') no-repeat center; /* Черная окантовка сердца, виден до нажатия */
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    border: none; /* Убираем границу, она не нужна */
+  }
+  
+  .card__like-button_is-active {
+    background: url('/images/like-active.svg') no-repeat center; /* Заполненное черное сердце после нажатия */
+  }
+  
+  .card__like-count {
+    color: #222; /* Цвет счётчика лайков */
+    font-size: 14px;
+  }
+  
+  
+  
+  
+  
