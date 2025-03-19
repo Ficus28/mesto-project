@@ -1,5 +1,7 @@
 import initialCards from "./cards.js";
 
+//Основной код
+
 // DOM-узлы
 const placesList = document.querySelector(".places__list");
 const cardTemplate = document.querySelector("#card-template")?.content;
@@ -155,7 +157,7 @@ function createCard(data) {
 
   // Добавляем обработчик для открытия изображения в модальном окне
   cardImage.addEventListener("click", function() {
-    openImageModal(this.src); // Открываем изображение в модальном окне
+    openImageModal(this.src); 
   });
 
   return cardElement;
@@ -168,11 +170,11 @@ function openImageModal(imageSrc) {
   const closeModal = document.getElementById("closeModal");
 
   fullImage.src = imageSrc;
-  modal.style.display = "block"; // Показываем модальное окно
+  modal.style.display = "block"; 
 
   // Закрытие модального окна
   closeModal.addEventListener("click", () => {
-    modal.style.display = "none"; // Прячем модальное окно
+    modal.style.display = "none"; 
   });
 
   // Закрытие модального окна при клике на фон

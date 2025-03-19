@@ -12,8 +12,8 @@
 @import url('../blocks/popup/_is-opened/popup_is-opened.css');
 
 .card__footer {
-    background-color: rgba(255, 255, 255, 0.8); /* Светлый фон, контрастный */
-    color: #222; /* Чёткий тёмный цвет текста */
+    background-color: rgba(255, 255, 255, 0.8); 
+    color: #222; 
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -21,7 +21,7 @@
   }
   
   .card__title {
-    color: #222; /* Глубокий тёмный цвет */
+    color: #222; 
     font-size: 16px;
     font-weight: bold;
   }
@@ -33,42 +33,42 @@
   }
   
   .card__like-button {
-    background: url('/images/like-inactive.svg') no-repeat center; /* Черная окантовка сердца, виден до нажатия */
+    background: url('/images/like-inactive.svg') no-repeat center; 
     width: 20px;
     height: 20px;
     cursor: pointer;
-    border: none; /* Убираем границу, она не нужна */
+    border: none; 
   }
   
   .card__like-button_is-active {
-    background: url('/images/like-active.svg') no-repeat center; /* Заполненное черное сердце после нажатия */
+    background: url('/images/like-active.svg') no-repeat center; 
   }
   
   .card__like-count {
-    color: #222; /* Цвет счётчика лайков */
+    color: #222; 
     font-size: 14px;
   }
   
   /* Модальное окно */
 .modal {
-    display: none; /* Изначально скрыто */
+    display: none; 
     position: fixed;
-    z-index: 1; /* На переднем плане */
-    padding-top: 100px; /* Отступ сверху */
+    z-index: 1; 
+    padding-top: 100px; 
     left: 0;
     top: 0;
-    width: 100%; /* Полный экран */
+    width: 100%; 
     height: 100%;
-    overflow: auto; /* При необходимости прокручивается */
-    background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный фон */
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.8); 
   }
   
   /* Модальное изображение */
   .modal-content {
     margin: auto;
     display: block;
-    width: 80%; /* Меньше, чем 100%, чтобы не выходило за края */
-    max-width: 700px; /* Максимальная ширина */
+    width: 80%; 
+    max-width: 700px; 
   }
   
   /* Кнопка закрытия */
