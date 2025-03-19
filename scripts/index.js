@@ -232,7 +232,7 @@ function enableValidation() {
   });
 }
 
-// Проверка валидности формы
+// Проверка валидности формы1
 function checkInputValidity(form) {
   const inputs = Array.from(form.querySelectorAll(".popup__input"));
   const submitButton = form.querySelector(".popup__button");

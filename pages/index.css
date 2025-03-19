@@ -11,6 +11,8 @@
 @import url('../blocks/popup/_is-animated/popup_is-animated.css');
 @import url('../blocks/popup/_is-opened/popup_is-opened.css');
 
+  /* Костыль*/
+
 .card__footer {
     background-color: rgba(255, 255, 255, 0.8); 
     color: #222; 
