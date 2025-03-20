@@ -1,4 +1,7 @@
-import initialCards from "./cards.js";
+import initialCards from "../scripts/cards.js";
+import './index.css';
+import avatar from '/images/avatar.jpg';
+import logo from '/images/logo.svg';
 
 //Основной код
 
@@ -247,3 +250,4 @@ function checkInputValidity(form) {
 
 enableValidation();
 loadProfileData();
+
